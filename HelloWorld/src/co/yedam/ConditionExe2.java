@@ -14,11 +14,15 @@ public class ConditionExe2 {
 			// switch, if else if else
 			if(Integer.parseInt(menu) == 1) {
 				login();
-			}else if(){
-				
+			}else if(Integer.parseInt(menu) == 2){
+				logout();
+			}else if(Integer.parseInt(menu) == 3){
+				signup();
+			}else if(Integer.parseInt(menu) == 4){
+				System.out.println("end of prog.");
 			}
 		}
-		System.out.println("end of prog.");
+		
 	} // end of main();
 	
 	public static void login() {
