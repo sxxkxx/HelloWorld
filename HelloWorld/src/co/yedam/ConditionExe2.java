@@ -7,11 +7,10 @@ public class ConditionExe2 {
 	public static void main(String[] args) {
 		Scanner scn = new Scanner(System.in);
 		while(true) {
-			System.out.println("메뉴를 선택하세요: (숫자를 입력)>> ");
 			System.out.println("1.로그인 2.로그아웃 3.회원가입 4.종료");
+			System.out.print("메뉴를 선택하세요: (숫자를 입력)>> ");
 			String menu = scn.nextLine();
 			
-			// switch, if else if else
 			if(Integer.parseInt(menu) == 1) {
 				login();
 			}else if(Integer.parseInt(menu) == 2){
@@ -20,6 +19,7 @@ public class ConditionExe2 {
 				signup();
 			}else if(Integer.parseInt(menu) == 4){
 				System.out.println("end of prog.");
+				break;
 			}
 		}
 		
