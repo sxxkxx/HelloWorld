@@ -19,9 +19,9 @@ public class ConditionExe2 {
 			}else if(Integer.parseInt(menu) == 3){
 				signup();
 			}else if(Integer.parseInt(menu) == 4){
-				System.out.println("end of prog.");
+				
 			}
-		}
+		}System.out.println("end of prog.");
 		
 	} // end of main();
 	
