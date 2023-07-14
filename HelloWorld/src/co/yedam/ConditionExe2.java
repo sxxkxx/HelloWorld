@@ -6,9 +6,8 @@ import java.util.Scanner;
 public class ConditionExe2 {
 
 	public static void main(String[] args) {
-		switchChoice();
-	} // end of main();
 
+	}
 	public static void switchChoice() {
 		boolean run = true;
 		Scanner scn = new Scanner(System.in);
