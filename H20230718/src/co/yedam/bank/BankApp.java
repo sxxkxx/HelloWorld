@@ -46,19 +46,35 @@ public class BankApp {
 		return balance;
 	}
 
-	boolean withdraw(int balance, int wdr) {
-
+	boolean withdraw(String accountNo, int wdr) {
+		int balance = 0;
+		int cnt = 0;
+		for (int i = 0; i < accounts.length; i++) {
+			if (accounts[i] != null && accountNo.equals(accounts[i].accountNo)) {
+				balance = accounts[i].balance;
+				cnt = i;
+			}
+		}
 		if (balance - wdr < 0) {
 			return false;
 		}
-		balance -= wdr;
+		accounts[cnt].setBalance(balance - wdr);
 		return true;
 
 	}
 
-	void accountList() {
+	int checkBalance(String accountNo) {
+		int balance = 0;
 		for (int i = 0; i < accounts.length; i++) {
+			if (accounts[i] != null && accountNo.equals(accounts[i].accountNo)) {
+				balance = accounts[i].balance;
 
+			}
 		}
+		return balance;
+	}
+
+	Account[] accountList() {
+		return accounts;
 	}
 }
