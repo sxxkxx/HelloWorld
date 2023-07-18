@@ -63,6 +63,7 @@ public class BoardExe {
 		int cnt = 0;
 		String pageNo = "페이지 ";
 		int page = 0;
+		// 전체글수를 카운트해서 페이지값 입력
 		for (int i = 0; i < boards.length; i++) {
 			if (boards[i] != null) {
 				cnt++;
@@ -73,8 +74,9 @@ public class BoardExe {
 				}
 			}
 		}
+		// 위에서 입력된 페이지 목록을 화면에 출력
 		for (int i = 0; i < boards.length; i++) {
-			if (boards[i]!= null && page < boards[i].getPage()) {
+			if (boards[i] != null && page < boards[i].getPage()) {
 				page = boards[i].getPage();
 				pageNo += page + ", ";
 			}
@@ -87,12 +89,14 @@ public class BoardExe {
 			// 배열의 값 null 여부 체크
 			if (boards[i] != null && boards[i].getPage() == pNo) {
 				System.out.println(boards[i].showList());
+
 				ox = false;
 			}
 		}
 		if (ox == true) {
 			System.out.println("없는 페이지 번호 입니다.");
 		}
+		System.out.println("현재 페이지 / 전체 페이지 " + pNo + " / " + page);
 
 	} // end of list;
 
