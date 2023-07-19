@@ -14,37 +14,53 @@ public class MemoApp {
 		memos = new Memo[10];
 	}
 
-	 void addMemo(Memo memoCnt) {
-		
+	int addMemo(Memo memoCnt) {
+		int ox = 0;
+		if (cnt < 10) {
+			ox = 1;
+		}
 		memos[cnt++] = memoCnt;
-		;
+		return ox;
 	}
 
-	boolean checkMemoNum(int no) {
+	int checkMemoNum(String no) {
 		for (int i = 0; i < memos.length; i++) {
-			if (memos[i] != null && no == memos[i].memoNo) {
-				return true;
+			if (memos[i].memoNo.equals(no)) {
+				return 1;
 			}
 		}
-		return false;
+		return 0;
 	}
 
-	void editMemo(int no, String content) {
+	void editMemo(String no, String content) {
 		for (int i = 0; i < memos.length; i++) {
-			if (no == memos[i].memoNo) {
-				memos[i].memoContent = content;
+			if (memos[i] != null && memos[i].memoNo.equals(no)) {
+				memos[i].setMemoContent(content);
 			}
 		}
 
 	}
 
-	int findMemo(int no) {
+	void delMemo(String no) {
+		for (int i = 0; i < memos.length; i++) {
+			if (memos[i] != null && memos[i].memoNo.equals(no)) {
+				memos[i] = null;
+			}
+		}
+	}
+
+	Memo[] memoList() {
+		return memos;
+	}
+
+	int findMemo(String no) {
 		int cnt = 0;
 		for (int i = 0; i < memos.length; i++) {
-			if (no == memos[i].memoNo) {
+			if (memos[i] != null && memos[i].memoNo.equals(no)) {
 				cnt = i;
 			}
 		}
 		return cnt;
 	}
+
 }
