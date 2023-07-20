@@ -4,17 +4,34 @@ import java.util.Scanner;
 
 public class AdderessAppExe {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MenuException {
 
 		// 1.등록 2.목록 3.수정 4.삭제 5.단건조회 6.종료
 		Scanner sc = new Scanner(System.in);
 		AddressApp app = new AddressApp();
 		boolean run = true;
+		int menu;
 		while (run) {
 			System.out.println("1.등록 2.목록 3.수정 4.삭제 5.단건조회 6.종료");
 			System.out.print("선택>> ");
-			int menu = Integer.parseInt(sc.nextLine());
-			if (menu == 1) {
+			try {
+				menu = Integer.parseInt(sc.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("메뉴잘못선택.");
+				// menu = 2;
+				continue; // 처음으로
+			}
+			try {
+				// 1 ~ 6 메뉴 이외의 메뉴 선택하면
+				if (menu < 1 || menu > 6) {
+					throw new MenuException(menu); // 예외 발생.
+				}
+			} catch (MenuException e) {
+				e.showMessage();
+				continue;
+			}
+
+			if (menu == INIT_MENU.ADD) {
 				System.out.println("등록> 1.학교, 2.회사, 3.친구");
 				int frd = Integer.parseInt(sc.nextLine());
 				if (frd == 1) {
@@ -60,7 +77,7 @@ public class AdderessAppExe {
 					}
 
 				}
-			} else if (menu == 2) {
+			} else if (menu == INIT_MENU.LIST) {
 				System.out.println("친구 목록");
 				Friend[] ary = app.friendList();
 				for (int i = 0; i < ary.length; i++) {
@@ -68,7 +85,7 @@ public class AdderessAppExe {
 						System.out.printf("이름 : %s, 연락처: %s\n", ary[i].getName(), ary[i].getPhone());
 					}
 				}
-			} else if (menu == 3) {
+			} else if (menu == INIT_MENU.EDIT) {
 				System.out.println("연락처 수정");
 				System.out.println("이름 새 연락처");
 				String name = sc.next();
@@ -80,7 +97,7 @@ public class AdderessAppExe {
 				} else {
 					System.out.println("등록 완료");
 				}
-			} else if (menu == 4) {
+			} else if (menu == INIT_MENU.DEL) {
 				System.out.println("삭제 ");
 				System.out.println("이름");
 				String name = sc.next();
@@ -91,20 +108,24 @@ public class AdderessAppExe {
 				} else {
 					System.out.println("삭제 완료");
 				}
-			} else if (menu == 5) {
+			} else if (menu == INIT_MENU.SEARCH) {
 				System.out.println("상세조회");
 				System.out.println("이름");
 				String name = sc.next();
 				sc.nextLine();
 
 				Friend ary = app.findFriend(name);
-				System.out.println(ary.showInfo());
 
-			} else if (menu == 6) {
+				if (ary == null) {
+					System.out.println("이름 없음");
+				} else {
+					System.out.println(ary.showInfo());
+				}
+			} else if (menu == INIT_MENU.EXIT) {
 				run = false;
 			}
-		}
 
+		}
 	}// end of main.
 
 }

@@ -8,7 +8,7 @@ public class Ex03 {
 		int min = 10;
 
 		for (int i = 0; i < ary.length; i++) {
-			ary[i] = (int) (Math.random() * 10);
+			ary[i] = (int) ((Math.random() * 10)+1);
 		}
 		for (int i = 0; i < ary.length; i++) {
 			if (min > ary[i]) {
