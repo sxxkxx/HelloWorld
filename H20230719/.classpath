@@ -6,6 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Dev/ojdbc8.jar"/>
+	<classpathentry kind="lib" path="/Users/sankim/git/HelloWorld/H20230719/src/lib/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/sankim/git/HelloWorld/H20230719/src/lib/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="/Users/sankim/git/HelloWorld/H20230719/src/lib/ojdbc8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

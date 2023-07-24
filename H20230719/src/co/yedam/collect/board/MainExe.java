@@ -86,6 +86,7 @@ public class MainExe {
 								System.out.print("내용 >> ");
 								String content = sc.nextLine();
 																
+								bApp.editBoard(no, id, title, content);
 								System.out.println("수정완료");
 								
 							} else {
@@ -96,6 +97,8 @@ public class MainExe {
 							System.out.println("로그 아웃");
 							continue;
 						} else if (menu == 9) {
+							
+							logout = false;
 							run = false;
 
 							System.out.println("종료");
