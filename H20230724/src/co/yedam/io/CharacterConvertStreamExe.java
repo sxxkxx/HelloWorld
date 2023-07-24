@@ -21,7 +21,7 @@ public class CharacterConvertStreamExe {
 
 	public static void write(String str) throws Exception {
 		// 바이트 기반 스트림. -> 문자열 기반 스트림 변경 보조 스트림.
-		FileOutputStream fos = new FileOutputStream("C:/Temp/test.txt");
+		FileOutputStream fos = new FileOutputStream("/Users/sankim/Downloads/aaa.txt");
 		Writer writer = new OutputStreamWriter(fos);
 		writer.write(str);
 		writer.flush();
@@ -29,7 +29,7 @@ public class CharacterConvertStreamExe {
 	}
 
 	public static String read() throws Exception {
-		FileInputStream fis = new FileInputStream("C:/Temp/test.txt");
+		FileInputStream fis = new FileInputStream("/Users/sankim/Downloads/aaa.txt");
 		Reader reader = new InputStreamReader(fis);
 		char[] buf = new char[100];
 		int chrNum = reader.read(buf); // 파일의 끝: -1, 읽은 문자크기 리턴
