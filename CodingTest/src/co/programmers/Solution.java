@@ -1,49 +1,31 @@
-<<<<<<< HEAD
 package co.programmers;
 
 import java.util.Scanner;
 
 public class Solution {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-
-		if (n % 2 == 0) {
-			System.out.println(n + " is even");
-		} else {
-			System.out.println(n + " is odd");
-		}
-	}
-}
-=======
-package co.programmers;
-
-public class Solution {
 
 	public static void main(String[] args) {
-//		solution(1,12);
-		String aa = "";
-		String bb = "";
-		int answer = 0;
-		if(Integer.parseInt(aa+bb)<Integer.parseInt(bb+aa)) {
-			answer = Integer.parseInt(bb+aa);
-		}else {
-			answer = Integer.parseInt(aa+bb);
-		}
-		System.out.println(answer);
-		
+
+//		System.out.println(solution(9, 91));
+//		System.out.println(solution(89, 8));
 	}
 
-	public static int solution(int a, int b) {
-		String aa = a+"";
-		String bb = b+"";
+	public int solution(int n) {
+		int a1 = 0;
+		int a2 = 0;
 		int answer = 0;
-		if(Integer.parseInt(aa)+Integer.parseInt(bb)<Integer.parseInt(bb)+Integer.parseInt(aa)) {
-			answer = Integer.parseInt(bb)+Integer.parseInt(aa);
-		}else {
-			answer = Integer.parseInt(aa)+Integer.parseInt(bb);
+
+		for (int i = 1; i <= n; i++) {
+			if (n % 2 == 0) {
+				a2 += i * i;
+
+			} else {
+
+				a1 += i;
+			}
+
 		}
 		return answer;
+
 	}
 }
->>>>>>> branch 'master' of https://github.com/sxxkxx/HelloWorld.git
