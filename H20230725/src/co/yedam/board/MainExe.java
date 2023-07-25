@@ -45,23 +45,32 @@ public class MainExe {
 						app.listBoard();
 						break;
 					case 5:
+						app.bWriteFile();
+						app.uWriteFile();
 						run = false;
 						stop = false;
 						break;
 					case 8:
 						stop = false;
 						System.out.println("로그 아웃");
+						app.uWriteFile();
 						break;
 					case 9:
+						System.out.println("pw 변경");
+						System.out.print("PW 입력>>");
+						pw = sc.nextLine();
+						app.changeInfo(id, pw);
+						
+						break;
 					default:
 						System.out.println("다시 선택");
-						
+
 					}
 				}
 			}
 
 		}
-		System.out.println("끝");
+		System.out.println("프로그램 종료");
 
 	}
 

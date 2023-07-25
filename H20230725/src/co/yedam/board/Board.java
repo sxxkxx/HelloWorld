@@ -27,9 +27,9 @@ public class Board implements Serializable {
 		this.content = content;
 		this.id = id;
 		this.date = date;
-		Date today = new Date();
+		Date today = new Date();									// 날짜 미입력시 오늘날짜 입력.
 		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-		this.date = sdf.format(today);
+		this.date = sdf.format(today); 		
 	}
 
 	public String getNo() {
