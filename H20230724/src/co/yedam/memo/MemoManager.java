@@ -51,6 +51,7 @@ public class MemoManager {
 		} else {
 			System.out.println("등록실패");
 		}
+		
 
 	}
 
@@ -111,17 +112,13 @@ public class MemoManager {
 		FileInputStream fis;
 
 		try {
-			fis = new FileInputStream("C:/temp/memos.db");
+			fis = new FileInputStream("C:/temp/memos.db"); // 파일 읽을 경로 지정
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			memoStorage = (List<Memo>) ois.readObject();
+			memoStorage = (List<Memo>) ois.readObject(); //list 생성한거랑 같이
 			ois.close();
 			fis.close();
-			System.out.println("⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣴⣶⣶⣶⣶⣶⠶⣶⣤⣤⣀⠀⠀⠀⠀⠀⠀\r\n" + "⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⠁⠀⢀⠈⢿⢀⣀⠀⠹⣿⣿⣿⣦⣄⠀⠀⠀\r\n"
-					+ "⠀⠀⠀⠀⠀⠀⣴⣿⣿⣿⣿⣿⠿⠀⠀⣟⡇⢘⣾⣽⠀⠀⡏⠉⠙⢛⣿⣷⡖⠀\r\n" + "⠀⠀⠀⠀⠀⣾⣿⣿⡿⠿⠷⠶⠤⠙⠒⠀⠒⢻⣿⣿⡷⠋⠀⠴⠞⠋⠁⢙⣿⣄\r\n"
-					+ "⠀⠀⠀⠀⢸⣿⣿⣯⣤⣤⣤⣤⣤⡄⠀⠀⠀⠀⠉⢹⡄⠀⠀⠀⠛⠛⠋⠉⠹⡇\r\n" + "⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⣀⣠⣤⣤⣤⣤⣤⣤⣤⣼⣇⣀⣀⣀⣛⣛⣒⣲⢾⡷\r\n"
-					+ "⢀⠤⠒⠒⢼⣿⣿⠶⠞⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⣼⠃\r\n" + "⢮⠀⠀⠀⠀⣿⣿⣆⠀⠀⠻⣿⡿⠛⠉⠉⠁⠀⠉⠉⠛⠿⣿⣿⠟⠁⠀⣼⠃⠀\r\n"
-					+ "⠈⠓⠶⣶⣾⣿⣿⣿⣧⡀⠀⠈⠒⢤⣀⣀⡀⠀⠀⣀⣀⡠⠚⠁⠀⢀⡼⠃⠀⠀\r\n" + "⠀⠀⠀⠈⢿⣿⣿⣿⣿⣿⣷⣤⣤⣤⣤⣭⣭⣭⣭⣭⣥⣤⣤⣤⣴⣟⠁");
-			System.out.println("           불러오기 완료");
+			
+			System.out.println("불러오기 완료");
 		} catch (Exception e) {
 			System.out.println("불러오기 실패");
 			e.printStackTrace();

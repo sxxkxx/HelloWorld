@@ -23,7 +23,8 @@ public class ArrayWord {
 		
 		FileReader fr;
 		try {
-			fr = new FileReader("/Users/sankim/git/HelloWorld/H20230724/src/temp/wordAry.txt");
+//			fr = new FileReader("/Users/sankim/git/HelloWorld/H20230724/src/temp/wordAry.txt");
+			fr = new FileReader("C:\\Temp/wordAry.txt");
 			BufferedReader br = new BufferedReader(fr);
 			while (true) {
 				String str = br.readLine();
@@ -34,7 +35,10 @@ public class ArrayWord {
 					continue;
 				}
 //				str = str.split(".",2)[1];
-				str = str.substring(str.indexOf(".") + 1, str.length());
+//				str = str.substring(str.indexOf(".") + 1, str.length());
+				str = str.replace("\"","");
+				str = str.replace(",","");
+				str = str.trim();
 				list.add(str);
 			}
 
