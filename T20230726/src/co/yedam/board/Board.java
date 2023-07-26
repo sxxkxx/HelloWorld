@@ -1,9 +1,10 @@
 package co.yedam.board;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Board {
+public class Board implements Serializable{
 	int no;
 	String title;
 	String content;

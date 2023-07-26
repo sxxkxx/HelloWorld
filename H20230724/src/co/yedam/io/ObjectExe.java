@@ -14,7 +14,7 @@ public class ObjectExe {
 	public static void main(String[] args) throws Exception {
 
 		Member member = new Member("son", "london", "7777");
-		FileOutputStream fos = new FileOutputStream("c:/temp/members.db");
+		FileOutputStream fos = new FileOutputStream("/Users/sankim/Downloads/members.db");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(member);
 		oos.flush();
@@ -22,7 +22,7 @@ public class ObjectExe {
 		fos.flush();
 		fos.close();
 
-		FileInputStream fis = new FileInputStream("c:/temp/members.db");
+		FileInputStream fis = new FileInputStream("/Users/sankim/Downloads/members.db");
 		ObjectInputStream ois = new ObjectInputStream(fis);
 
 		Member mem = (Member) ois.readObject();

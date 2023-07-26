@@ -13,7 +13,7 @@ public class BoardMain {
 
 		while (run) {
 
-			System.out.println("1. 추가 2. 수정 3. 조회 4.삭제 5.조회 6.종료");
+			System.out.println("1. 추가 2. 수정 3. 조회 4.삭제 5.목록 6.종료");
 			System.out.print("선택>> ");
 			int menu = Integer.parseInt(sc.nextLine());
 
@@ -74,7 +74,7 @@ public class BoardMain {
 
 				break;
 			case 6:
-				app.read();
+				app.storeToFile();
 				run = false;
 				break;
 			default:

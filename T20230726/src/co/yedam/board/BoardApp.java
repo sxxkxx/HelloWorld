@@ -1,6 +1,6 @@
 package co.yedam.board;
 
-import java.io.BufferedReader;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 public class BoardApp {
 	List<Board> bds = new ArrayList<>();
 	Scanner sc = new Scanner(System.in);
 
 	BoardApp() {
-		read();
+		readFromFile();
 
 	}
 
@@ -77,38 +79,40 @@ public class BoardApp {
 		return bds;
 	}
 
-	public void read() {
+	public void readFromFile() {
+		// 입력스트림. (객체)
 		FileInputStream fis;
+
 		try {
-			fis = new FileInputStream("C:/temp/boardList.db");
+//			fis = new FileInputStream("C:/temp/memos.db"); // 파일 읽을 경로 지정
+			fis = new FileInputStream("/Users/sankim/Downloads/boardList.db"); // 파일 읽을 경로 지정
 			ObjectInputStream ois = new ObjectInputStream(fis);
-
-			List<Board> bds = (List<Board>) ois.readObject();
-
+			bds = (List<Board>) ois.readObject(); //list 생성한거랑 같이
 			ois.close();
 			fis.close();
+			
+			System.out.println("불러오기 완료");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println("불러오기 실패");
 			e.printStackTrace();
 		}
 
 	}
 
-	public void write() {
-
+	public void storeToFile() {
+		// 출력스트림. (객체)
 		FileOutputStream fos;
+
 		try {
-			fos = new FileOutputStream("C:/temp/boardList.db");
+//			fos = new FileOutputStream("C:/temp/memos.db");
+			fos = new FileOutputStream("/Users/sankim/Downloads/boardList.db");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			for (int i = 0; i < bds.size(); i++) {
-				oos.writeObject(bds.get(i));
-			}
-			oos.flush();
+			oos.writeObject(bds);
 			oos.close();
-			fos.flush();
 			fos.close();
+
+			System.out.println("저장완료");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
