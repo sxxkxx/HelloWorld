@@ -59,9 +59,9 @@ public class BoardApp {
 		Board bd = null;
 
 		if (date.isEmpty()) { // 날짜 미입력시 오늘날짜 입력
-			bd = new Board(no, title, content, id, date); // board class 생성자 참조
+			bd = new Board(no, title, content, id); // board class 생성자 참조
 		} else {
-			bd = new Board(no, title, content, id);
+			bd = new Board(no, title, content, id, date);
 		}
 		if (boards.add(bd)) {
 			System.out.println(no + "번 게시글 등록완료");
@@ -149,7 +149,8 @@ public class BoardApp {
 		// 입력스트림. (객체)
 
 		try {
-			FileInputStream fis = new FileInputStream("/Users/sankim/Downloads/userList.txt");
+//			FileInputStream fis = new FileInputStream("/Users/sankim/Downloads/userList.txt");
+			FileInputStream fis = new FileInputStream("c:/temp/userList.txt");
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader br = new BufferedReader(isr);
 
@@ -175,8 +176,8 @@ public class BoardApp {
 		// 입력스트림. (객체)
 
 		try {
-//			FileInputStream fis = new FileInputStream("c:/temp/boardList.txt");
-			FileInputStream fis = new FileInputStream("/Users/sankim/Downloads/boardList.txt");
+			FileInputStream fis = new FileInputStream("c:/temp/boardList.txt");
+//			FileInputStream fis = new FileInputStream("/Users/sankim/Downloads/boardList.txt");
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader br = new BufferedReader(isr);
 
@@ -201,7 +202,8 @@ public class BoardApp {
 	public void bWriteFile() {
 
 		try {
-			FileWriter fw = new FileWriter("/Users/sankim/Downloads/boardList.txt");
+//			FileWriter fw = new FileWriter("/Users/sankim/Downloads/boardList.txt");
+			FileWriter fw = new FileWriter("c:/temp/userList.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
 
 			String str = "";
@@ -227,7 +229,8 @@ public class BoardApp {
 	public void uWriteFile() {
 
 		try {
-			FileWriter fw = new FileWriter("/Users/sankim/Downloads/userList.txt");
+//			FileWriter fw = new FileWriter("/Users/sankim/Downloads/userList.txt");
+			FileWriter fw = new FileWriter("c:/temp/userList.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
 
 			String str = "";
