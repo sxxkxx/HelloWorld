@@ -12,6 +12,7 @@ public class ProductVO {
 
 	public String toString() {
 		System.out.print("제품번호: " + productNumber);
+		System.out.print(", 제조사: " + productMaker);
 		System.out.print(", 제품명: " + productName);
 		System.out.print(", 제품가격: " + productPrice);
 		System.out.println(", 재고수량: " + productQuantity);

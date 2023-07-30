@@ -13,8 +13,16 @@ public interface ProductService {
 	int productUpdate(ProductVO vo);
 
 	int productStore(ProductVO vo);
+	
+	int warehousingInsert(WarehousingVO vo);
 
 	int productRelease(ProductVO vo);
+	
+	int warehousingRelease(WarehousingVO vo);
 
 	List<WarehousingVO> warehousingHistory();
+	
+	int getNextProductNumber();
+	
+	int getNextWarehousingNumber();
 }

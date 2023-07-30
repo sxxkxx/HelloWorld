@@ -1,6 +1,5 @@
 package co.san.newproject;
 
-import co.san.newproject.common.DataSource;
 import co.san.newproject.menu.MainMenu;
 
 public class App {
