@@ -19,4 +19,10 @@ public class ProductVO {
 		return null;
 	}
 
+	public String toString2() {
+		System.out.print("제품번호: " + productNumber);
+		System.out.println(", 재고수량: " + productQuantity);
+		return null;
+	}
+
 }

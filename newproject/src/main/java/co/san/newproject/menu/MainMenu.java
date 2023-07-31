@@ -5,25 +5,43 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import co.san.newproject.inventory.service.InventoryService;
+import co.san.newproject.inventory.service.InventoryVO;
+import co.san.newproject.inventory.serviceImpl.InventoryServiceImpl;
 import co.san.newproject.product.service.ProductService;
 import co.san.newproject.product.service.ProductVO;
-import co.san.newproject.product.service.WarehousingVO;
 import co.san.newproject.product.serviceImpl.ProductServiceImpl;
 
 public class MainMenu {
 	Scanner sc = new Scanner(System.in);
 	private ProductService ps = new ProductServiceImpl();
+	private InventoryService is = new InventoryServiceImpl();
 
 	private void mainTitle() {
 		System.out.println("===== 제품 관리 =====");
+		System.out.println("==== 1.제품 관리 ====");
+		System.out.println("==== 2.입출고 관리 ===");
+		System.out.println("==== 3.종료 ========");
+		System.out.println("===== 메뉴 선택 =====");
+	}
+
+	private void productTitle() {
+		System.out.println("===== 제품 관리 =====");
 		System.out.println("==== 1.제품 등록 ====");
-		System.out.println("==== 2.제품 수정 ====");
-		System.out.println("==== 3.제품 삭제 ====");
+		System.out.println("==== 2.제품 삭제 ====");
+		System.out.println("==== 3.제품 수정 ====");
 		System.out.println("==== 4.제품 목록 ====");
-		System.out.println("==== 5.제품 입고 ====");
-		System.out.println("==== 6.제품 출고 ====");
-		System.out.println("==== 7.입출고 내역 ===");
-		System.out.println("==== 8.종료 ========");
+		System.out.println("==== 5.메인 메뉴 ====");
+		System.out.println("===== 메뉴 선택 =====");
+	}
+
+	private void inventoryTitle() {
+		System.out.println("==== 입출고 관리 ====");
+		System.out.println("==== 1.제품 입고 ====");
+		System.out.println("==== 2.제품 출고 ====");
+		System.out.println("==== 3.입출고 내역 ===");
+		System.out.println("==== 4.재고 조회 ====");
+		System.out.println("==== 5.메인 메뉴 ====");
 		System.out.println("===== 메뉴 선택 =====");
 	}
 
@@ -34,34 +52,80 @@ public class MainMenu {
 			int key = Integer.parseInt(sc.nextLine());
 			switch (key) {
 			case 1:
+				productManager();
+				break;
+			case 2:
+				inventoryManager();
+				break;
+			case 3:
+				System.out.println("=====작업 종료=====");
+				b = true;
+				break;
+			default:
+				System.out.println("===== 없는 메뉴 =====");
+			}
+
+		} while (!b);
+		sc.close();
+	}
+
+	public void productManager() {
+		boolean stop = false;
+		do {
+			productTitle();
+			int key = Integer.parseInt(sc.nextLine());
+			switch (key) {
+			case 1:
 				productInsert();
 				break;
 			case 2:
-				productUpdate();
+				productDelete();
 				break;
 			case 3:
-				productDelete();
+				productUpdate();
 				break;
 			case 4:
 				productList();
 				break;
 			case 5:
-				productStore();
+				System.out.println("=== 제품 관리 종료 ===");
+				stop = true;
 				break;
-			case 6:
-				productRelease();
-				break;
-			case 7:
-				warehousingHistory();
-				break;
-			case 8:
-				System.out.println("=====작업 종료=====");
-				b = true;
-				break;
+			default:
+				System.out.println("===== 없는 메뉴 =====");
 			}
 
-		} while (!b);
-		sc.close();
+		} while (!stop);
+
+	}
+
+	public void inventoryManager() {
+		boolean stop = false;
+		do {
+			inventoryTitle();
+			int key = Integer.parseInt(sc.nextLine());
+			switch (key) {
+			case 1:
+				productStore();
+				break;
+			case 2:
+				productRelease();
+				break;
+			case 3:
+				inventoryHistory();
+				break;
+			case 4:
+				inventoryInquiry();
+				break;
+			case 5:
+				System.out.println("=== 재고 관리 종료 ===");
+				stop = true;
+				break;
+			default:
+				System.out.println("===== 없는 메뉴 =====");
+			}
+
+		} while (!stop);
 	}
 
 	private void productInsert() {
@@ -88,31 +152,47 @@ public class MainMenu {
 	}
 
 	private void productUpdate() {
-		System.out.println("제품 수정");
-		ProductVO product = new ProductVO();
-		System.out.println("제품번호 입력");
-		int no = Integer.parseInt(sc.nextLine());
-		System.out.println("제품가격 입력");
-		int price = Integer.parseInt(sc.nextLine());
-		product.setProductPrice(price);
-		product.setProductNumber(no);
-		if (ps.productUpdate(product) != 0) {
-			System.out.println("수정 완료");
-		} else {
-			System.out.println("수정 실패");
+		while (true) {
+			try {
+				System.out.println("제품 수정");
+				ProductVO product = new ProductVO();
+				System.out.println("제품번호 입력");
+				int no = Integer.parseInt(sc.nextLine());
+				System.out.println("제품가격 입력");
+				int price = Integer.parseInt(sc.nextLine());
+				product.setProductPrice(price);
+				product.setProductNumber(no);
+				if (ps.productUpdate(product) != 0) {
+					System.out.println("수정 완료");
+				} else {
+					System.out.println("수정 실패");
+				}
+				break;
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.out.println("숫자를 입력하세요");
+			}
 		}
 	}
 
 	private void productDelete() {
-		System.out.println("제품 삭제");
-		ProductVO product = new ProductVO();
-		System.out.println("제품번호 입력");
-		int no = Integer.parseInt(sc.nextLine());
-		product.setProductNumber(no);
-		if (ps.productDelete(product) != 0) {
-			System.out.println("삭제 완료");
-		} else {
-			System.out.println("삭제 실패");
+		while (true) {
+			try {
+				System.out.println("제품 삭제");
+				ProductVO product = new ProductVO();
+				System.out.println("제품번호 입력");
+				int no = Integer.parseInt(sc.nextLine());
+				product.setProductNumber(no);
+				if (ps.productDelete(product) != 0) {
+					System.out.println("삭제 완료");
+				} else {
+					System.out.println("삭제 실패");
+				}
+				break;
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.out.println("숫자를 입력하세요");
+			}
 		}
 	}
 
@@ -128,43 +208,80 @@ public class MainMenu {
 	}
 
 	private void productStore() {
-		System.out.println("제품 입고");
-		ProductVO product = new ProductVO();
-		System.out.println("제품번호 입력");
-		int no = Integer.parseInt(sc.nextLine());
-		System.out.println("입고수량 입력");
-		int quantity = Integer.parseInt(sc.nextLine());
-		product.setProductQuantity(quantity);
-		product.setProductNumber(no);
-		if (ps.productStore(product) != 0) {
-			System.out.println("입고 등록 완료");
-		} else {
-			System.out.println("입고 등록 실패");
+		while (true) {
+			try {
+				System.out.println("제품 입고");
+				ProductVO product = new ProductVO();
+				System.out.println("제품번호 입력");
+				int no = Integer.parseInt(sc.nextLine());
+				System.out.println("입고수량 입력");
+				int quantity = Integer.parseInt(sc.nextLine());
+				product.setProductQuantity(quantity);
+				product.setProductNumber(no);
+				if (ps.productStore(product) != 0) {
+					InventoryVO inventoryvo = new InventoryVO();
+					inventoryvo.setInventoryNumber(is.getNextInventoryNumber());
+					inventoryvo.setProductNumber(no);
+					inventoryvo.setInventoryQuantity(quantity);
+					is.inventoryInsert(inventoryvo);
+					System.out.println("입고 등록 완료");
+				} else {
+					System.out.println("입고 등록 실패");
+				}
+				break;
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.out.println("숫자를 입력하세요");
+			}
 		}
 	}
 
 	private void productRelease() {
-		System.out.println("제품 출고");
-		ProductVO product = new ProductVO();
-		System.out.println("제품번호 입력");
-		int no = Integer.parseInt(sc.nextLine());
-		System.out.println("출고수량 입력");
-		int quantity = Integer.parseInt(sc.nextLine());
-		product.setProductQuantity(quantity);
-		product.setProductNumber(no);
-		if (ps.productRelease(product) != 0) {
-			System.out.println("출고 등록 완료");
-		} else {
-			System.out.println("재고 부족");
+		while (true) {
+			try {
+				System.out.println("제품 출고");
+				ProductVO product = new ProductVO();
+				System.out.println("제품번호 입력");
+				int no = Integer.parseInt(sc.nextLine());
+				System.out.println("출고수량 입력");
+				int quantity = Integer.parseInt(sc.nextLine());
+				product.setProductQuantity(quantity);
+				product.setProductNumber(no);
+				if (ps.productRelease(product) != 0) {
+					InventoryVO inventoryvo = new InventoryVO();
+					inventoryvo.setInventoryNumber(is.getNextInventoryNumber());
+					inventoryvo.setProductNumber(no);
+					inventoryvo.setInventoryQuantity(quantity);
+					is.inventoryRelease(inventoryvo);
+					System.out.println("출고 등록 완료");
+				} else {
+					System.out.println("재고 부족");
+				}
+				break;
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.out.println("숫자를 입력하세요");
+			}
 		}
 	}
 
-	private void warehousingHistory() {
+	private void inventoryHistory() {
 
-		List<WarehousingVO> warehousingHistory = ps.warehousingHistory();
-		if (!warehousingHistory.isEmpty()) {
-			for (WarehousingVO vo : warehousingHistory) {
+		List<InventoryVO> inventoryHistory = is.inventoryHistory();
+		if (!inventoryHistory.isEmpty()) {
+			for (InventoryVO vo : inventoryHistory) {
 				vo.toString();
+			}
+		} else {
+			System.out.println("내역이 존재하지 않음");
+		}
+	}
+
+	private void inventoryInquiry() {
+		List<ProductVO> products = is.inventoryInquiry();
+		if (!products.isEmpty()) {
+			for (ProductVO vo : products) {
+				vo.toString2();
 			}
 		} else {
 			System.out.println("내역이 존재하지 않음");
