@@ -6,7 +6,7 @@ import co.san.newproject.product.service.ProductVO;
 
 
 public interface InventoryService {
-	int inventoryInsert(InventoryVO vo);
+	int inventoryStore(InventoryVO vo);
 		
 	int inventoryRelease(InventoryVO vo);
 

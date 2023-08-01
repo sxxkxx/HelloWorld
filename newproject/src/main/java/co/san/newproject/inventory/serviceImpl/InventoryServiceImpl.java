@@ -11,7 +11,6 @@ import co.san.newproject.common.DataSource;
 import co.san.newproject.inventory.service.InventoryService;
 import co.san.newproject.inventory.service.InventoryVO;
 import co.san.newproject.product.service.ProductVO;
-import co.san.newproject.product.service.WarehousingVO;
 
 public class InventoryServiceImpl implements InventoryService {
 
@@ -37,9 +36,9 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public int inventoryInsert(InventoryVO vo) {
+	public int inventoryStore(InventoryVO vo) { // 입고내역 저장
 		int n = 0;
-		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY,INVENTORY_DATE) VALUES(?,?,?,?,?)";
 		connection = dao.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -47,6 +46,7 @@ public class InventoryServiceImpl implements InventoryService {
 			preparedStatement.setInt(2, vo.getProductNumber());
 			preparedStatement.setString(3, "입고");
 			preparedStatement.setInt(4, vo.getInventoryQuantity());
+			preparedStatement.setDate(5, java.sql.Date.valueOf(vo.getInventoryDate()));
 			n = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -60,7 +60,7 @@ public class InventoryServiceImpl implements InventoryService {
 	@Override
 	public int inventoryRelease(InventoryVO vo) {
 		int n = 0;
-		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY,INVENTORY_DATE) VALUES(?,?,?,?,?)";
 		connection = dao.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
@@ -68,6 +68,7 @@ public class InventoryServiceImpl implements InventoryService {
 			preparedStatement.setInt(2, vo.getProductNumber());
 			preparedStatement.setString(3, "출고");
 			preparedStatement.setInt(4, vo.getInventoryQuantity());
+			preparedStatement.setDate(5, java.sql.Date.valueOf(vo.getInventoryDate()));
 			n = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,7 +95,7 @@ public class InventoryServiceImpl implements InventoryService {
 				vo.setProductNumber(resultSet.getInt("product_number"));
 				vo.setInventoryStatus(resultSet.getString("inventory_status"));
 				vo.setInventoryQuantity(resultSet.getInt("inventory_quantity"));
-				vo.setInventoryDate(resultSet.getDate("inventory_date"));
+				vo.setInventoryDate(resultSet.getDate("inventory_date").toLocalDate());
 
 				inventoryHistory.add(vo);
 			}
@@ -127,15 +128,15 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public int getNextInventoryNumber() {
-		String sql = "SELECT NVL(MAX(Inventory_NUMBER),0) AS NEXT_Inventory_NUMBER FROM Inventory";
+	public int getNextInventoryNumber() { // 입출고 내역 관리번호를 자동부여.
+		String sql = "SELECT NVL(MAX(Inventory_NUMBER),0) AS MAX_NUMBER FROM Inventory";
 		int result = 0;
 		connection = dao.getConnection();
 		try {
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				result = (resultSet.getInt("next_inventory_number")) + 1;
+				result = (resultSet.getInt("MAX_NUMBER")) + 1;
 
 			}
 		} catch (SQLException e) {

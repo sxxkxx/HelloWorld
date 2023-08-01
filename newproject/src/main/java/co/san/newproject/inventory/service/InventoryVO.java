@@ -1,8 +1,6 @@
 package co.san.newproject.inventory.service;
 
-import java.sql.Date;
 import java.time.LocalDate;
-
 
 import lombok.Data;
 
@@ -12,9 +10,7 @@ public class InventoryVO {
 	private int productNumber;
 	private String inventoryStatus;
 	private int inventoryQuantity;
-	private Date inventoryDate;
-
-//	private LocalDate inventoryDate;
+	private LocalDate inventoryDate;
 
 	@Override
 	public String toString() {
@@ -24,4 +20,6 @@ public class InventoryVO {
 		System.out.println(", " + inventoryStatus + "날짜: " + inventoryDate);
 		return null;
 	}
+
+	
 }

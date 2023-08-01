@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductVO> productList() {
 		String sql = "SELECT * FROM PRODUCT ORDER BY PRODUCT_NUMBER";
-		List<ProductVO> products = new ArrayList();
+		List<ProductVO> products = new ArrayList<>();
 		ProductVO product;
 		connection = dao.getConnection();
 		try {
