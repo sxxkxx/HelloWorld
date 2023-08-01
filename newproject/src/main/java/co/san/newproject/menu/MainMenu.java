@@ -249,7 +249,7 @@ public class MainMenu {
 				String date = sc.nextLine();
 				product.setProductQuantity(quantity);
 				product.setProductNumber(no);
-				if (ps.productStore(product) != 0) {
+				if (ps.productStore(product) != 0) { // 재고가 입고되면 입고 내역 저장
 					InventoryVO inventoryvo = new InventoryVO();
 					inventoryvo.setInventoryNumber(is.getNextInventoryNumber());
 					inventoryvo.setProductNumber(no);
@@ -281,7 +281,7 @@ public class MainMenu {
 				String date = sc.nextLine();
 				product.setProductQuantity(quantity);
 				product.setProductNumber(no);
-				if (ps.productRelease(product) != 0) {
+				if (ps.productRelease(product) != 0) { // 재고가 입고되면 입고 내역 저장
 					InventoryVO inventoryvo = new InventoryVO();
 					inventoryvo.setInventoryNumber(is.getNextInventoryNumber());
 					inventoryvo.setProductNumber(no);

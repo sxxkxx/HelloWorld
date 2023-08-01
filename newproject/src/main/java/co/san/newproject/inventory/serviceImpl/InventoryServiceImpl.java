@@ -36,7 +36,7 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public int inventoryStore(InventoryVO vo) { // 입고내역 저장
+	public int inventoryStore(InventoryVO vo) { // 입고내역 등록
 		int n = 0;
 		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY,INVENTORY_DATE) VALUES(?,?,?,?,?)";
 		connection = dao.getConnection();
@@ -58,7 +58,7 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public int inventoryRelease(InventoryVO vo) {
+	public int inventoryRelease(InventoryVO vo) { // 출고내역 등록
 		int n = 0;
 		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY,INVENTORY_DATE) VALUES(?,?,?,?,?)";
 		connection = dao.getConnection();
@@ -80,7 +80,7 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public List<InventoryVO> inventoryHistory() {
+	public List<InventoryVO> inventoryHistory() { // 입출고 내역
 		String sql = "SELECT * FROM INVENTORY ORDER BY INVENTORY_NUMBER";
 		connection = dao.getConnection();
 		InventoryVO vo;
@@ -107,7 +107,7 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public List<ProductVO> inventoryInquiry() {
+	public List<ProductVO> inventoryInquiry() { // 재고 조회
 		String sql = "SELECT * FROM PRODUCT ORDER BY PRODUCT_NUMBER";
 		List<ProductVO> products = new ArrayList<>();
 		ProductVO product;
