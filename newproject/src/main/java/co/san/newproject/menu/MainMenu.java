@@ -19,19 +19,21 @@ public class MainMenu {
 
 	// 메인 메뉴 출력
 	private void mainTitle() {
+		System.out.println();
 		System.out.println("    ____                \r\n" + "  /\\  _`\\   /'\\_/`\\    \r\n"
 				+ "  \\ \\ \\L\\ \\/\\      \\   \r\n" + "   \\ \\ ,__/\\ \\ \\__\\ \\  \r\n"
 				+ "    \\ \\ \\/  \\ \\ \\_/\\ \\ \r\n" + "     \\ \\_\\   \\ \\_\\\\ \\_\\\r\n"
 				+ "      \\/_/    \\/_/ \\/_/");
 		System.out.println("========= 메인 메뉴 =========");
 		System.out.println("======== 1.제품 관리 ========");
-		System.out.println("======== 2.입출고 관리 =======");
-		System.out.println("======== 3.종료 ============");
+		System.out.println("======== 2.입출고 관리 ======");
+		System.out.println("======== 3.종료 =============");
 		System.out.println("========= 메뉴 선택 =========");
 	}
 
 	// 제품 관리 메뉴 출력
 	private void productTitle() {
+		System.out.println();
 		System.out.println("========= 제품 관리 =========");
 		System.out.println("======== 1.제품 등록 ========");
 		System.out.println("======== 2.제품 삭제 ========");
@@ -43,10 +45,11 @@ public class MainMenu {
 
 	// 입출고 관리 메뉴 출력
 	private void inventoryTitle() {
-		System.out.println("======== 입출고 관리 =========");
+		System.out.println();
+		System.out.println("======== 입출고 관리 ========");
 		System.out.println("======== 1.제품 입고 ========");
 		System.out.println("======== 2.제품 출고 ========");
-		System.out.println("======== 3.입출고 내역 =======");
+		System.out.println("======== 3.입출고 내역 ======");
 		System.out.println("======== 4.재고 조회 ========");
 		System.out.println("======== 5.메인 메뉴 ========");
 		System.out.println("========= 메뉴 선택 =========");
