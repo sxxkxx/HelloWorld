@@ -35,8 +35,9 @@ public class InventoryServiceImpl implements InventoryService {
 		}
 	}
 
+	// 입고내역 등록
 	@Override
-	public int inventoryStore(InventoryVO vo) { // 입고내역 등록
+	public int inventoryStore(InventoryVO vo) {
 		int n = 0;
 		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY,INVENTORY_DATE) VALUES(?,?,?,?,?)";
 		connection = dao.getConnection();
@@ -57,8 +58,9 @@ public class InventoryServiceImpl implements InventoryService {
 		return n;
 	}
 
+	// 출고내역 등록
 	@Override
-	public int inventoryRelease(InventoryVO vo) { // 출고내역 등록
+	public int inventoryRelease(InventoryVO vo) {
 		int n = 0;
 		String sql = "INSERT INTO INVENTORY(INVENTORY_NUMBER,PRODUCT_NUMBER,INVENTORY_STATUS,INVENTORY_QUANTITY,INVENTORY_DATE) VALUES(?,?,?,?,?)";
 		connection = dao.getConnection();
@@ -79,8 +81,9 @@ public class InventoryServiceImpl implements InventoryService {
 		return n;
 	}
 
+	// 입출고 내역 조회
 	@Override
-	public List<InventoryVO> inventoryHistory() { // 입출고 내역
+	public List<InventoryVO> inventoryHistory() {
 		String sql = "SELECT * FROM INVENTORY ORDER BY INVENTORY_NUMBER";
 		connection = dao.getConnection();
 		InventoryVO vo;
@@ -106,8 +109,9 @@ public class InventoryServiceImpl implements InventoryService {
 		return inventoryHistory;
 	}
 
+	// 재고 조회
 	@Override
-	public List<ProductVO> inventoryInquiry() { // 재고 조회
+	public List<ProductVO> inventoryInquiry() {
 		String sql = "SELECT * FROM PRODUCT ORDER BY PRODUCT_NUMBER";
 		List<ProductVO> products = new ArrayList<>();
 		ProductVO product;
@@ -127,8 +131,9 @@ public class InventoryServiceImpl implements InventoryService {
 		return products;
 	}
 
+	// 입출고 내역 관리번호를 자동부여
 	@Override
-	public int getNextInventoryNumber() { // 입출고 내역 관리번호를 자동부여.
+	public int getNextInventoryNumber() {
 		String sql = "SELECT NVL(MAX(Inventory_NUMBER),0) AS MAX_NUMBER FROM Inventory";
 		int result = 0;
 		connection = dao.getConnection();
