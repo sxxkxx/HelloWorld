@@ -41,8 +41,7 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement><!-- lock down plugins versions to avoid using Maven
-			defaults (may be moved to parent pom) -->
+		
 			<plugins>
 
 				<plugin>
@@ -52,7 +51,7 @@
 						<archive>
 							<manifest>
 								<addClasspath>true</addClasspath>
-								<classpathPrefix>lib</classpathPrefix>
+								<classpathPrefix>lib/</classpathPrefix>
 								<mainClass>co.san.newproject.App</mainClass>
 							</manifest>
 						</archive>
@@ -61,7 +60,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					
+
 					<executions>
 						<execution>
 							<id>copy</id>
@@ -76,6 +75,6 @@
 					</executions>
 				</plugin>
 			</plugins>
-		</pluginManagement>
+		
 	</build>
 </project>
