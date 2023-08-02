@@ -125,7 +125,7 @@ public class MainMenu {
 				productList();
 				break;
 			case 5:
-				System.out.println("======= 제품 관리 종료 =======");
+				System.out.println("====== 제품 관리 종료 =======");
 				stop = true;
 				break;
 			default:
@@ -166,7 +166,7 @@ public class MainMenu {
 				inventoryInquiry();
 				break;
 			case 5:
-				System.out.println("====== 입출고 관리 종료 =======");
+				System.out.println("====== 입출고 관리 종료 =====");
 				stop = true;
 				break;
 			default:
