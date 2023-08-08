@@ -13,7 +13,7 @@
 			AND MEMBER_PASSWORD = #{memberPassword}
 		</if>
 	</select>
-	
+
 	<insert id="memberInsert"
 		parameterType="co.san.example.member.service.MemberVO">
 		INSERT INTO
@@ -22,7 +22,7 @@
 		VALUES(#{memberId}, #{memberPassword}, #{memberName}, #{memberImg},
 		#{memberTel}, #{memberAddress})
 	</insert>
-	
+
 	<update id="memberUpdate"
 		parameterType="co.san.example.member.service.MemberVO">
 		UPDATE MEMBER
@@ -38,7 +38,7 @@
 		</set>
 		WHERE MEMBER_ID = #{memberId}
 	</update>
-	
+
 	<delete id="memberDelete"
 		parameterType="co.san.example.member.service.MemberVO">
 		DELETE FROM MEMBER WHERE MEMBER_ID = #{memberId}

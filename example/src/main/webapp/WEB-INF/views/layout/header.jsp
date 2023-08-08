@@ -11,7 +11,7 @@
 		<ul>
 			<li><a class="menuLink" href="home.do">Home</a></li>
 			<li><a class="menuLink" href="#">Book</a></li>
-			<li><a class="menuLink" href="#">Content</a></li>
+			<li><a class="menuLink" href="noticelist.do">Notice</a></li>
 			
 			<c:if test="${author eq 'ADMIN'}">
 				<li><a class="menuLink" href="memberlist.do">Member</a></li>
