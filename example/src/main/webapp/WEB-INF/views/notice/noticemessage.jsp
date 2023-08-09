@@ -7,11 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div>
-		<h1>홈 ㅎㅇ</h1>
-		<div>
-			<img src="img/img.gif" alt="My Image">
-		</div>
+	<div align="center">
+		<h1>${message }</h1>
 	</div>
+
 </body>
 </html>
