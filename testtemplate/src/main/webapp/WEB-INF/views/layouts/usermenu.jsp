@@ -31,7 +31,7 @@
 								<a href="feature.html" class="dropdown-item">Features</a> <a
 									href="blog.html" class="dropdown-item">Blog Article</a> <a
 									href="testimonial.html" class="dropdown-item">Testimonial</a> <a
-									href="404.html" class="dropdown-item">404 Page</a>
+									href="admin.do" class="dropdown-item">관리자</a>
 							</div>
 						</div>
 						<a href="contact.html" class="nav-item nav-link">Contact</a>

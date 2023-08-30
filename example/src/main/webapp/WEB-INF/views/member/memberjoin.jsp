@@ -12,7 +12,7 @@
 			<h1>회원가입</h1>
 		</div>
 		<div>
-			<form id="frm" action="memberjoin.do" onsubmit="return formCheck()"
+			<form id="frm" action="join.do" onsubmit="return formCheck()"
 				method="post" enctype="multipart/form-data"> <!-- 첨부파일있을때는 enctype="multipart/form-data" 필수 -->
 				<div>
 					<table border="1">
