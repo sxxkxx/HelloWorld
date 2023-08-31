@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				if (result.retCode == 'Success') {
 				} else if (result.retCode == 'Fail') {
 					alert(result.result);
-				}
+				}	
 			})
 			.catch(console.log);
 		this.parentElement.parentElement.remove();
