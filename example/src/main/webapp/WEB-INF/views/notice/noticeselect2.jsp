@@ -23,13 +23,6 @@
 	width: 200px;
 }
 </style>
-<script src="js/replyjs.js"></script>
-<link
-	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
-	rel="stylesheet" type="text/css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script
-	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
 	<div align="center">
@@ -77,35 +70,32 @@
 				value="${n.noticeId}">
 		</form>
 	</div>
-
-	<br>
-	<div class="addReply">
-		<input type="text" id="reply" placeholder="reply"> <input
-			type="text" id="replyer" placeholder="replyer">
-		<button type="button" value="등록" id="addReply"></button>
-	</div>
 	<!-- 댓글부분. -->
-
-	<table id="example" class="display" style="width: 100%">
-		<thead>
-			<tr>
-				<th>댓글번호</th>
-				<th>댓글내용</th>
-				<th>작성자</th>
-				<th>작성일자</th>
-
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>댓글번호</th>
-				<th>댓글내용</th>
-				<th>작성자</th>
-				<th>작성일자</th>
-
-			</tr>
-		</tfoot>
-	</table>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-comments fa-fw"></i>Reply
+					<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New
+						Reply</button>
+				</div>
+				<div class="panel-body">
+					<ul class="chat">
+						<li class="left clearfix" data-rno="12" style="display: none;">
+							<div>
+								<div class="header">
+									<strong class="primary-font">user00</strong> <small
+										class="pull-right text-muted">2023-03-05 13:13</small>
+								</div>
+								<p>Good job!</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="panel-footer"></div>
+			</div>
+		</div>
+	</div>
 	<!-- end -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -123,7 +113,7 @@
 					</div>
 					<div class='form-group'>
 						<label>Replyer</label> <input class='form-control' name='replyer'
-							placeholder='Replyer'>
+							 placeholder='Replyer'>
 					</div>
 					<div class='form-group' style="display: none;">
 						<label>Reply Date</label> <input class='form-control'
@@ -145,7 +135,7 @@
 	</div>
 	<!-- /.modal -->
 
-
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		function noticeUpdate(str) {
@@ -158,46 +148,29 @@
 			document.getElementById("frm").submit();
 		}
 	</script>
-
+	<script src="js/replyjs.js"></script>
 	<script type="text/javascript">
 		var noticeId = '<c:out value= "${n.noticeId}"/>';
 		console.log('notice:', noticeId);
-		
+
 		var reply = new Reply();
+		reply.replyList(noticeId, function(data) {
+			console.log(data)
+
+			for (let i = 0; i < data.length; i++) {
+				let temp = $('.chat>li').eq(0).clone();
+				temp.css('display', 'block');
+
+				temp.attr('data-rno', data[i].replyId);
+				temp.find('strong').text(data[i].replyer);
+				temp.find('small').text(
+						reply.displayDateTime(data[i].replyDate));
+				temp.find('p').text(data[i].reply);
 				
-		$('#addReply').on('click', function(){
-			let content = $('#reply').val();
-			let writer = $('#replyer').val();
-			const param = {noticeId, reply:content, replyer:writer}
-			
-			reply.replyAdd(param, function(data) {
-				addNewRow(data.data);
-				console.log(data);
-			})
-			
+				$('.chat').append(temp);
+			}
+
 		})
-		function addNewRow(data) {
-   			 table.row
-        		.add({
-		            replyId : data.replyId,
-		            reply : data.reply,
-		            replyer : data.replyer,
-		            replyDate : data.replyDate
-        		})
-       			.draw(false);
-		}
-		
-		const table = new DataTable('#example', {
-			ajax: 'AjaxDataTable.do',
-			columns: [
-				{data: 'replyId'},
-				{data: 'reply'},
-				{data: 'replyer'},
-				{data: 'replyDate'}
-			]
-		});
-	
-		
 		// 댓글 등록 화면
 						
 		$('#addReplyBtn').on('click',function(){
@@ -219,7 +192,8 @@
 			reply.replyAdd(param, function(data){
 				console.log(data);
 				
-				
+				let temp = $('.chat > li').eq(0).clone();
+				temp.css('display', 'block');
 	
 				temp.attr('data-rno', data.data.replyId);
 				temp.find('strong').text(data.data.replyer);
@@ -232,13 +206,13 @@
 		});
 		
 		// 수정, 삭제 화면.
-		$('table').on('click','tbody>tr',function(){
+		$('.chat').on('click','li',function(){
 			$('#modalModBtn').show();
 			$('#modalRemoveBtn').show();
 			$('#modalRegisterBtn').hide();
 			$('.modal').modal('show');
 			
-			var rno = $(this).find("td:eq(0)").text();
+			var rno = $(this).attr('data-rno');
 			rno = $(this).data('rno');
 			var el = $(this);
 			//data-rno = 1

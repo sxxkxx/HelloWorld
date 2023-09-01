@@ -11,22 +11,22 @@
 		parameterType="co.san.example.notice.service.ReplyVO">
 		<selectKey
 			resultType="co.san.example.notice.service.ReplyVO"
-			keyProperty="replyId,replyDate">
-			SELECT SEQ_REPLY.NEXTVAL AS REPLY_ID, SYSDATE AS
-			REPLY_DATE FROM DUAL
+			keyProperty="replyId,replyDate" order="BEFORE">
+			SELECT SEQ_REPLY.NEXTVAL AS
+			replyId, SYSDATE AS replyDate
+			FROM DUAL
 		</selectKey>
-		INSERT INTO REPLY VALUES ( REPLY_ID, #{noticeId},
-		#{reply},#{replyer},REPLY_DATE)
-
+		INSERT INTO REPLY
+		VALUES (#{replyId}, #{noticeId}, #{reply},
+		#{replyer}, #{replyDate})
 	</insert>
 
 	<update id="update"
 		parameterType="co.san.example.notice.service.ReplyVO">
-		UPDATE MEMBERS
+		UPDATE REPLY
 		<set>
 			<if test="reply != null">REPLY = #{reply},</if>
 			<if test="replyer != null">REPLYER = #{replyer}</if>
-
 		</set>
 		WHERE REPLY_ID = #{replyId}
 
@@ -34,7 +34,7 @@
 
 	<delete id="delete"
 		parameterType="co.san.example.notice.service.ReplyVO">
-		DELETE FROM reply WHERE REPLY_ID = #{replyId}
+		DELETE FROM REPLY WHERE REPLY_ID = #{replyId}
 	</delete>
 
 	<select id="selectList"
