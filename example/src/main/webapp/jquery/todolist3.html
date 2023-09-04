@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-width: 250px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul li {
+      cursor: pointer;
+      position: relative;
+      padding: 12px 8px 12px 40px;
+      list-style-type: none;
+      background: #eee;
+      font-size: 18px;
+      transition: 0.2s;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    ul li:nth-child(odd) {
+      background: #f9f9f9;
+    }
+
+    ul li:hover {
+      background: #ddd;
+    }
+
+    ul li.checked {
+      background: #888;
+      color: #fff;
+      text-decoration: line-through;
+    }
+
+    ul li.checked::before {
+      content: '';
+      position: absolute;
+      border-color: #fff;
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      top: 10px;
+      left: 16px;
+      transform: rotate(45deg);
+      height: 15px;
+      width: 7px;
+    }
+
+    p {
+      display: inline-block;
+    }
+
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 12px 16px 12px 16px;
+    }
+
+    .close:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .header {
+      background-color: #f44336;
+      padding: 30px 40px;
+      color: white;
+      text-align: center;
+    }
+
+    .header:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    input {
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      width: 75%;
+      padding: 10px;
+      float: left;
+      font-size: 16px;
+    }
+
+    .addBtn {
+      padding: 10px;
+      width: 25%;
+      background: #d9d9d9;
+      color: #555;
+      float: left;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      border-radius: 0;
+    }
+
+    .addBtn:hover {
+      background-color: #bbb;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="myDIV" class="header">
+    <h2 style="margin:5px">My To Do List</h2>
+    <input type="text" id="myInput" placeholder="Title...">
+    <input type="text" id="myDue" placeholder="Due Date...">
+    <span id="addBtn" class="addBtn">Add</span>
+  </div>
+
+  <ul id="myUL">
+  </ul>
+
+  <script src="../js/todojs.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      const myInput = $('#myInput');
+      const myUL = $('#myUL');
+      const addBtn = $('#addBtn');
+      const todo = new Todo();
+
+      function createTodoElement(data) {
+        const temp = $('<li>', {
+          'todo-no': data.data.todoNo,
+          css: { display: 'block' },
+        }).append(
+          $('<p>').text(data.data.todo),
+          $('<small>').text(todo.displayDateTime(data.data.dueDate)),
+          $('<span>', {
+            text: '\u00D7',
+            class: 'close',
+          })
+        );
+
+        return temp;
+      }
+
+      function addTodoElement(element) {
+        myUL.prepend(element);
+        element.find('.close').on('click', function () {
+          const div = this.parentElement;
+          div.style.display = 'none';
+          const todoNo = $(div).attr('todo-no');
+          todo.todoRemove({ todoNo }, function (data) {
+            div.style.display = 'none';
+          });
+        });
+
+        element.on('click', function (event) {
+          event.stopPropagation();
+          const el = $(this);
+          const todoNo = el.attr('todo-no');
+          const complete = el.hasClass('checked') ? 'NO' : 'YES';
+          const param = { todoNo, complete };
+          todo.todoEdit(param, function (data) {
+            el.toggleClass('checked');
+          });
+          return false;
+        });
+      }
+
+      function clearInput() {
+        myInput.val('');
+      }
+
+      addBtn.on('click', function () {
+        const content = myInput.val();
+        if (content === '') {
+          alert("You must write something!");
+        } else {
+          const param = { todo: content };
+          todo.addTodo(param, function (data) {
+            const newElement = createTodoElement(data);
+            addTodoElement(newElement);
+            clearInput();
+          });
+        }
+      });
+
+      todo.todoList(function (data) {
+        for (let i = 0; i < data.length; i++) {
+          const newElement = createTodoElement(data[i]);
+          addTodoElement(newElement);
+          if (data[i].complete === 'YES') {
+            newElement.toggleClass('checked');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

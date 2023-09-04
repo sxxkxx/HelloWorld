@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+	<style>
+		body {
+			margin: 0;
+			min-width: 250px;
+		}
+
+		/* Include the padding and border in an element's total width and height */
+		* {
+			box-sizing: border-box;
+		}
+
+		/* Remove margins and padding from the list */
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+
+		/* Style the list items */
+		ul li {
+			cursor: pointer;
+			position: relative;
+			padding: 12px 8px 12px 40px;
+			list-style-type: none;
+			background: #eee;
+			font-size: 18px;
+			transition: 0.2s;
+
+			/* make the list items unselectable */
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		/* Set all odd list items to a different color (zebra-stripes) */
+		ul li:nth-child(odd) {
+			background: #f9f9f9;
+		}
+
+		/* Darker background-color on hover */
+		ul li:hover {
+			background: #ddd;
+		}
+
+		/* When clicked on, add a background color and strike out text */
+		ul li.checked {
+			background: #888;
+			color: #fff;
+			text-decoration: line-through;
+		}
+
+		/* Add a "checked" mark when clicked on */
+		ul li.checked::before {
+			content: '';
+			position: absolute;
+			border-color: #fff;
+			border-style: solid;
+			border-width: 0 2px 2px 0;
+			top: 10px;
+			left: 16px;
+			transform: rotate(45deg);
+			height: 15px;
+			width: 7px;
+		}
+
+		p {
+			display: inline-block;
+		}
+
+		/* Style the close button */
+		.close {
+			position: absolute;
+			right: 0;
+			top: 0;
+			padding: 12px 16px 12px 16px;
+		}
+
+		.close:hover {
+			background-color: #f44336;
+			color: white;
+		}
+
+		/* Style the header */
+		.header {
+			background-color: #f44336;
+			padding: 30px 40px;
+			color: white;
+			text-align: center;
+		}
+
+		/* Clear floats after the header */
+		.header:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+
+		/* Style the input */
+		input {
+			margin: 0;
+			border: none;
+			border-radius: 0;
+			width: 75%;
+			padding: 10px;
+			float: left;
+			font-size: 16px;
+		}
+
+		/* Style the "Add" button */
+		.addBtn {
+			padding: 10px;
+			width: 25%;
+			background: #d9d9d9;
+			color: #555;
+			float: left;
+			text-align: center;
+			font-size: 16px;
+			cursor: pointer;
+			transition: 0.3s;
+			border-radius: 0;
+		}
+
+		.addBtn:hover {
+			background-color: #bbb;
+		}
+	</style>
+
+	
+</head>
+
+<body>
+
+	<div id="myDIV" class="header">
+		<h2 style="margin:5px">My To Do List</h2>
+		<input type="text" id="myInput" placeholder="Title...">
+		<input type="text" id="myDue" placeholder="Due Date...">
+		<span onclick="newElement()" class="addBtn">Add</span>
+	</div>
+
+	<ul id="myUL">
+		<li style="display: none;">
+			<p></p><small></small>
+		</li>
+
+	</ul>
+	<script src="../js/todojs.js"></script>
+
+	<script>
+		var myNodelist = $("li");
+		var list = $('li');
+		var close = $('.close');
+		var todo = new Todo();
+
+
+
+
+		function newElement() {
+
+			var content = $('#myInput').val();
+			var param = {todo: content};
+			console.log(content);
+			if (content === '') {
+				alert("You must write something!");
+			} else {
+				todo.addTodo(param, function (data) {
+					let temp = $('#myUL>li').eq(0).clone();
+					temp.css('display', 'block');
+					temp.attr('todo-no', data.data.todoNo);
+					temp.find('p').text(data.data.todo);
+					temp.find('small').text(
+						todo.displayDateTime(data.data.dueDate));
+					var span = $('<span/>').text('\u00D7').addClass('close');
+					temp.append(span);
+
+					$('#myUL').prepend(temp);
+
+
+					$('.close').on('click', function () {
+						var div = this.parentElement;
+						div.style.display = 'none';
+						var todoNo = $(div).attr('todo-no');
+						console.log(todoNo);
+						var param = {todoNo}
+						todo.todoRemove(param, function (data) {
+							div.style.display = 'none';
+						})
+					})
+
+					$('li').on('click', function (event) {
+						event.stopPropagation();
+						var el = $(this);
+						var todoNo = el.attr('todo-no');
+						var complete;
+						if (el.hasClass('checked') === true) {
+							complete = 'NO';
+							console.log('ooooo');
+
+						} else {
+							// class가 존재하지않음
+
+							complete = 'YES';
+							console.log('xxxxxx');
+
+						}
+						console.log(todoNo);
+						console.log(complete);
+						var param = {todoNo, complete}
+
+						todo.todoEdit(param, function (data) {
+							el.toggleClass('checked');
+							complete = null;
+						})
+
+						return false;
+					})
+				})
+				$('#myInput').value = "";
+
+			}
+		}
+
+
+
+		$(document).ready(function () {
+
+			todo.todoList(function (data) {
+
+				for (let i = 0; i < data.length; i++) {
+					let temp = $('#myUL>li').eq(0).clone();
+					temp.css('display', 'block');
+					temp.attr('todo-no', data[i].todoNo);
+					temp.find('p').text(data[i].todo);
+					temp.find('small').text(
+						todo.displayDateTime(data[i].dueDate));
+					var span = $('<span/>').text('\u00D7').addClass('close');
+					$(temp).append(span);
+					$('#myUL').append(temp);
+					console.log(data[i].complete);
+					if (data[i].complete === 'YES') {
+						temp.toggleClass('checked');
+						console.log($(this));
+						console.log(data[i].complete);
+					}
+
+				}
+				$('.close').on('click', function () {
+					var div = this.parentElement;
+					div.style.display = 'none';
+					var todoNo = $(div).attr('todo-no');
+					console.log(todoNo);
+					var param = {todoNo}
+					todo.todoRemove(param, function (data) {
+						div.style.display = 'none';
+					})
+				})
+				$('li').on('click', function (event) {
+					event.stopPropagation();
+					var el = $(this);
+					var todoNo = el.attr('todo-no');
+					var complete;
+					if (el.hasClass('checked') === true) {
+						complete = 'NO';
+						console.log('ooooo');
+
+					} else {
+						// class가 존재하지않음
+
+						complete = 'YES';
+						console.log('xxxxxx');
+
+					}
+					console.log(todoNo);
+					console.log(complete);
+					var param = {todoNo, complete}
+
+					todo.todoEdit(param, function (data) {
+						el.toggleClass('checked');
+						complete = null;
+					})
+
+					return false;
+				})
+
+			})
+		})
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+</body>
+
+</html>
