@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+
+</head>
+
+<body>
+	<div>
+		<div>
+			<input type="text" id="bkCode" placeholder="도서코드">
+			<input type="text" id="bkTitle" placeholder="도서명">
+			<input type="text" id="bkAuthor" placeholder="저자">
+			<input type="text" id="bkPress" placeholder="출판사">
+			<input type="text" id="bkPrice" placeholder="금액">
+			<button type="button" id="addBtn">저장</button>
+			<button type="button" id="selectDelBtn">선택삭제</button>
+
+			<table border="1">
+				<thead>
+					<th><input type="checkbox" id="allChk"></th>
+					<th>도서코드</th>
+					<th>도서명</th>
+					<th>저자</th>
+					<th>출판사</th>
+					<th>가격</th>
+					<th>삭제</th>
+				</thead>
+				<tbody id="list">
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="js/book.js"></script>
+	<script>
+		var book = new Book();
+
+		function deleteBook() {
+
+			var tr = $(this).parent().parent();
+			var bkCode = tr.find('td:eq(1)').text();
+			console.log(bkCode);
+			var param = {bkCode};
+			book.removeBook(param, function (data) {
+				tr.remove();
+			})
+
+		}
+
+
+
+		$("#allChk").click(function () {
+			if ($("#allChk").is(":checked")) {
+				$("input[name=checkbox]").prop("checked", true);
+			} else {
+				$("input[name=checkbox]").prop("checked", false);
+			}
+		});
+
+		$("input[name=checkbox]").click(function () {
+			var totalArr = $("input[name=checkbox]").length;
+			var checked = $("input[name=checkbox]:checked").length;
+
+			if (totalArr != ckecked) {
+				$("#allChk").prop("checked", false);
+			} else {
+				$("#allChk").prop("checked", true);
+			}
+		});
+
+
+		book.bookList(function (data) {
+
+
+			data.forEach((book, idx) => {
+
+				document.querySelector('#list').appendChild(makeBookInfo(book));
+			})
+
+		})
+
+		function makeBookInfo(book) {
+
+			const fields = ['bkCode', 'bkTitle', 'bkAuthor', 'bkPress', 'bkPrice'];
+			const tr = document.createElement('tr');
+			// checkbox.
+			const td = document.createElement('td');
+			const chk = document.createElement('input');
+			chk.setAttribute('type', 'checkbox');
+			chk.setAttribute('name', 'checkbox');
+			td.appendChild(chk);
+			tr.appendChild(td);
+			fields.forEach(field => {
+				const td = document.createElement('td');
+				td.innerText = book[field];
+				tr.appendChild(td);
+			})
+			const endTd = document.createElement('td');
+			const delBtn = document.createElement('button');
+			delBtn.setAttribute('type', 'button');
+			delBtn.setAttribute('name', 'delBtn');
+			delBtn.onclick = function () {
+				var book = new Book();
+				var tr = $(this).parent().parent();
+				var bkCode = tr.find('td:eq(1)').text();
+				console.log(bkCode);
+				var param = {bkCode};
+				book.removeBook(param, function (data) {
+					tr.remove();
+				})
+
+			}
+			delBtn.innerText = '삭제';
+			endTd.appendChild(delBtn);
+			tr.appendChild(endTd);
+
+			return tr;
+		}
+
+		$('#addBtn').on('click', function () {
+
+			var bkCode = $('#bkCode').val();
+			var bkTitle = $('#bkTitle').val();
+			var bkAuthor = $('#bkAuthor').val();
+			var bkPress = $('#bkPress').val();
+			var bkPrice = $('#bkPrice').val();
+			var param = {bkCode, bkTitle, bkAuthor, bkPress, bkPrice};
+			book.addBook(param, function (data) {
+
+				document.querySelector('#list').appendChild(makeBookInfo(data.data));
+			})
+			$('#bkCode').val(null);
+			$('#bkTitle').val(null);
+			$('#bkAuthor').val(null);
+			$('#bkPress').val(null);
+			$('#bkPrice').val(null);
+		})
+
+
+
+		$('#selectDelBtn').on('click', function () {
+
+			$('td>input:checkbox').each(function (index) {
+				if ($(this).is(":checked")) {
+					var tr = $(this).parent().parent();
+					var bkCode = tr.find('td:eq(1)').text();
+					console.log(bkCode);
+					var param = {bkCode};
+					book.removeBook(param, function (data) {
+						tr.remove();
+					})
+				}
+			})
+		})
+
+
+
+
+		$("[name='delBtn']").on('click', function () {
+
+
+		})
+
+
+
+
+
+	</script>
+</body>
+
+</html>
